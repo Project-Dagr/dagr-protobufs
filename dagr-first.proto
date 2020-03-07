@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+message User {
+    string id = 1; // a globally unique ID string for this user.  In the case of Signal that would mean +16504442323, for the default macaddr derived id it would be !<6 hexidecimal bytes>
+    string first_name = 2; // First name of user
+    string last_name = 3;
+    bytes macaddr = 4; // This is the addr of the radio.  Not populated by the phone, but added by the esp32 when broadcasting
+}
+
+// a data message to forward to an external app (or possibly also be consumed internally in the case of CLEAR_TEXT and CLEAR_READACK
+message Data {
+    enum Type {
+        /// A message sent from a device outside of the mesh, in a form the mesh does not understand
+        SIGNAL_OPAQUE = 0; // NOTE: This must be 0, because it is documented in IMeshService.aidl to be so
+
+        /// a simple UTF-8 text message, which even the little micros in the mesh can understand and show on their screen
+        /// eventually in some circumstances even signal might send messages in this form (see below)
+        CLEAR_TEXT = 1;
+
+        /// a message receive acknowledgement, sent in cleartext - allows radio to show user that a message has been read by the recipient, optional
+        CLEAR_READACK = 2;
+
+        /// Not yet used but eventually:
+        /// SIGNAL_CLEAR_DATA = 3; // Unencrypted at the signal level, relying on the radio crypt only (to keep size small), but contains Signal control data radios don't care about (ie non text)
+    }
+
+    Type typ = 1; // required
+    bytes payload = 2; // required
+}
+
+/**
+ * Message sent from phone to dagr
+ */
+message toDagr{
+    User source = 1; // Source of message. Added on phone side 
+    User destination = 2; // Destination of message. Added on phone side
+
+    Data payload = 3;
+}
