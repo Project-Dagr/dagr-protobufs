@@ -22,5 +22,5 @@ message toDagr {
 }
 
 message fromDagr {
-    MessagePacket packet = 1
+    MessagePacket packet = 1;
 }
