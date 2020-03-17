@@ -1,11 +1,17 @@
 syntax = "proto3";
 
 
-message MessagePacket {
-    int32 from = 1; // User ID
-    int32 to = 2; // User ID
+message ChatMessage {
+    int32 from = 1;
+    int32 to = 2;
 
-    bytes payload = 3;
+    bytes message = 3;
+}
+
+message DagrPacket {
+    int32 packet_num = 1; // User ID
+
+    bytes fragment = 3;
 
     /// The time this message was received by the esp32 (secs since 1970).  Note: this field is _never_ sent on the radio link itself (to save space)
     /// Times are typically not sent over the mesh, but they will be added to any Packet (chain of SubPacket)
@@ -15,12 +21,3 @@ message MessagePacket {
 // message ConfigMessage {
 //     User owner = 1
 // }
-message toDagr {
-    oneof variant {
-        MessagePacket packet = 1;
-    }
-}
-
-message fromDagr {
-    MessagePacket packet = 1;
-}
