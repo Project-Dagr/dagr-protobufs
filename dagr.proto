@@ -1,14 +1,12 @@
 syntax = "proto3";
 
-import 'nanopb.proto';
-
 
 
 message ChatMessage {
     string from = 1;
     string to = 2;
 
-    bytes message = 3  [(nanopb).max_size = 230];
+    bytes message = 3;
 }
 
 message DagrPacket {
