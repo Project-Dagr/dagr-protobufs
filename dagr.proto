@@ -3,8 +3,8 @@ syntax = "proto3";
 
 
 message ChatMessage {
-    string from = 1;
-    string to = 2;
+    int32 from = 1;
+    int32 to = 2;
 
     bytes message = 3;
 }
