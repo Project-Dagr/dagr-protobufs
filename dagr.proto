@@ -8,8 +8,8 @@ message toDagr {
 }
 
 message ChatMessage {
-    int32 from = 1;
-    int32 to = 2;
+    string from = 1;
+    string to = 2;
 
     bytes message = 3;
 }
