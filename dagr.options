@@ -1,1 +1,1 @@
-*ChatMessage.message max_size:230
+*DagrPacket.fragment max_size:255

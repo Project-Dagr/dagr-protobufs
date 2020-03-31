@@ -1,6 +1,11 @@
 syntax = "proto3";
 
-
+message toDagr {
+    oneof variant{
+        ChatMessage message = 1;
+        User user = 2;
+    }
+}
 
 message ChatMessage {
     int32 from = 1;
@@ -19,6 +24,17 @@ message DagrPacket {
     /// sent to the phone (so the phone can know exact time of reception)
     uint32 rx_time = 4;
 }
+
+message User {
+    string id = 1; // a globally unique ID string for this user.  In the case of
+                   // Signal that would mean +16504442323, for the default macaddr
+                   // derived id it would be !<6 hexidecimal bytes>
+    string long_name = 2;  // A full name for this user, i.e. "Kevin Hester"
+    string short_name = 3; // A VERY short name, ideally two characters.  Suitable
+                           // for a tiny OLED screen
+    bytes macaddr = 4;     // This is the addr of the radio.  Not populated by the
+                           // phone, but added by the esp32 when broadcasting
+  }
 // message ConfigMessage {
 //     User owner = 1
 // }
